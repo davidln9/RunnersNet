@@ -1,0 +1,179 @@
+a.headname {
+    position: absolute;
+    float: left;
+    top: 1px;
+    left: 5px;
+}
+div.distancediv {
+    background-color: lightblue;
+    position: relative;
+    z-index:1;
+    height: 200px;
+    margin: 47px 500px 0px 500px;
+}
+div.editbio {
+    background-color: lightblue;
+    position: relative;
+    z-index: 1;
+    height: 250px;
+    margin: 3px 500px 0px 500px;
+}
+.profpic {
+    max-height: 100%;
+    max-width: 100%;
+    overflow:hidden;
+}
+div.profilepic {
+    background-color: whitesmoke;
+    z-index:1;
+    position: absolute;
+    height: 150px;
+    width: 150px;
+    top: 47px;
+    left: 100px;
+}
+div.biography {
+    z-index:3;
+    position: absolute;
+    top: 47px;
+    left: 255px;
+}
+div.editpic {
+    z-index:1;
+    position: relative;
+    height: 275px;
+    background-color: lightblue;
+    margin: 47px 500px 0px 500px;
+    font-style: "helvetica";
+}
+textarea.bio {
+    font-size: .75em;
+    background-color: whitesmoke;
+}
+div.profile_options {
+    z-index:2;
+    position: absolute;
+    height: 50px;
+    top: 200px;
+    left: 100px;
+    font-style: sans-serif;
+    font-size:.7em;
+}
+div.namediv {
+    z-index:1;
+    
+    position: absolute;
+    height: 150px;
+    width: 100%;
+    background-color: lightblue;
+    margin: 47px 0px 0px 0px;
+    
+}
+div.photodiv {
+    z-index:1;
+    
+    position: absolute;
+    height: 300px;
+    width: 100%;
+    background-color: lightblue;
+    margin: 47px 0px 0px 0px;
+    
+}
+div.runtypediv {
+    z-index:1;
+    position: relative;
+    height: 155px;
+    background-color: lightblue;
+    margin: 47px 500px 0px 500px;
+    padding: 10px;
+}
+div.biodiv {
+    z-index:1;
+    position: relative;
+    height: 252px;
+    background-color: lightblue;
+    margin: 47px 500px 0px 500px;
+}
+div.normdiv {
+    z-index: 2;
+    position: relative;
+    height: 370px;
+    border: 1px solid #999966;
+    background-color: lightblue;
+    margin: 47px 500px 0px 500px;
+    text-align: center;
+    
+}
+div.toppic {
+    height: 32px;
+    padding: 3px;
+    margin: 0px 90% 0px 0px;
+    display: block;
+    overflow:hidden;
+}
+div.titlediv {
+    top:0px;
+    left:0px;
+    position: absolute;
+    z-index:1;
+    height: 40px;
+    width: 100%;
+    border: 1px solid grey;
+    background-color: cyan;
+    padding: 0px;
+}
+div.logindiv {
+    top:47px;
+    left:5px;
+    position: absolute;
+    z-index:3;
+    height:75px;
+    width: 250px;
+    background-color: lightsalmon;
+    float:left;
+}
+body {
+    background-color: whitesmoke;
+}
+p3 {
+    color: red;
+    text-align: center;
+    font-size: 1.1em;
+    margin:0;
+}
+.PreviewPicture {
+width: 180px;
+height: 180px;
+background-position: center center;
+background-size: cover;
+background-image: url('uploads/default.jpg');
+-webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, .3);
+display: inline-block;
+opacity: 100%;
+}
+h1 {
+    text-align: center;
+    color: black;
+    margin:0;
+}
+
+h2 {
+    text-align: center;
+    margin: 0;
+}
+
+label {
+    font-style: sans-serif;
+    font-size: 1.1em;
+}
+
+textarea {
+    font-size: .9em;
+}
+header {
+    text-align: right;
+}
+h1 {
+    text-align: center;
+    font-size: 1.5em;
+}

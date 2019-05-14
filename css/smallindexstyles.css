@@ -1,0 +1,65 @@
+.titlediv {
+top:0px;
+left:0px;
+position: absolute;
+    z-index:1;
+height: 75px;
+width: 100%;
+border: 1px solid grey;
+    background-color: cyan;
+padding: 5px;
+}
+.normdiv {
+    z-index: 1;
+padding:3px;
+position: relative;
+height: auto;
+width: 100%;
+border: 1px solid #999966;
+background-color: lightblue;
+margin: 47px 35% 0px 35%;
+text-align: center;
+}
+.forgot {
+    margin: 75px 0 0 0;
+}
+.regposts {
+display: block;
+background-color: lightblue;
+width: 100%;
+height: auto;
+position: relative;
+margin: 15px 0px 0px 0px;
+}
+a {
+    font-family: "Arial", Times, serif;
+color: black;
+}
+p {
+    font-family: "Arial", Times, serif;
+color: black;
+}
+.infodiv {
+    background-color: lightblue;
+    bottom: 0%;
+    width: 100%;
+    height: auto;
+    position: bottom;
+}
+.container {
+    margin: 0;
+    position: relative;
+    display: block;
+    
+}
+.bodydiv {
+    position: relative;
+    margin: 0 0 0 0; 
+    display: left;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
+body {
+    background-color:whitesmoke;
+}
