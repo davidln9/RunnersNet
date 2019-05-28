@@ -14,7 +14,6 @@
 <meta name="keywords" content="social media,running,journal,active lifestyle,fitness,Runners Net,Runners">
 <?php
 if(!preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"])) {
-    echo "<script src='sparkles.js'></script><span class='js-cursor-container'></span>";
 }
 ?>
 <form id="loginform" action="login.php" name="loginform" method="post">

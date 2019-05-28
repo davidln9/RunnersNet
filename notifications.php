@@ -18,14 +18,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <div class="titlediv">
 <?php
-if(!preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"])) {
-    echo "<script src='sparkles.js'></script><span class='js-cursor-container'></span>";
-}
-    include 'menu.php';
-    ?>
-
-<?php
-
+include 'menu.php';
 usort($notifications, "datesort");
 $requests = 0;
 $friendreqs = array();

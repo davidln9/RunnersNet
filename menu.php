@@ -54,7 +54,7 @@ if ($call = mysqli_query($db, "CALL GETNOTIFICATIONS($cid)")) {
 <div class="toppic">
 <?php
     include_once 'profilepicture.php';
-    echo "<a href='profilepage.php'><img src='uploads/lollipop.jpg' height='32'></a>";
+    echo "<a href='profilepage.php'>".profilepic::getProfilePic(32)."</a>";
     ?>
 </div>
 </div>
