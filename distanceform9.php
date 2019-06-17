@@ -3,7 +3,6 @@
     ?>
 <!DOCTYPE html>
 <html>
-<?php
 <link rel="stylesheet" media="screen and (min-width: 550px)" href="css/styles.php">
     <link rel="stylesheet" media="screen and (max-width: 550px)" href="css/400.php" />
 <header>
