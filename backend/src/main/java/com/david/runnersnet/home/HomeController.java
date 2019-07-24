@@ -1,6 +1,7 @@
 package com.david.runnersnet.home;
 
 import com.david.runnersnet.logs.distance.Distance;
+import com.david.runnersnet.logs.distance.DistanceBuilder;
 import com.david.runnersnet.logs.distance.DistanceRepository;
 import com.david.runnersnet.user.UserEntity;
 import com.david.runnersnet.user.UserLoggedIn;
@@ -17,8 +18,12 @@ import java.util.List;
 @RequestMapping("/home")
 public class HomeController {
 
+    // all these autowired things!!!!
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    DistanceBuilder distanceBuilder;
 
     @Autowired
     DistanceRepository distanceRepository;
@@ -27,7 +32,9 @@ public class HomeController {
     public ResponseEntity<List<Distance>> getHomePageContent() {
         UserEntity user = userRepository.findByUsername(UserLoggedIn.getInstance().getUsername());
 
-        List<Distance> runs = distanceRepository.findByUserID(user.getCryptID());
-        return ResponseEntity.ok(runs);
+        distanceBuilder.setDistanceList(distanceRepository.findByUserID(user.getCryptID()));
+        distanceBuilder.addLikesAndCommentsMany();
+
+        return ResponseEntity.ok(distanceBuilder.getDistanceList());
     }
 }

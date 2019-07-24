@@ -1,9 +1,10 @@
 package com.david.runnersnet.logs.distance;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.david.runnersnet.misc.comments.Comment;
+import com.david.runnersnet.misc.likes.Like;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "distance")
@@ -25,16 +26,22 @@ public class Distance {
     private String runtime;
     private String pace;
     private float distance;
+    private Integer type = 0;
 
     @Column(nullable = true)
     private Integer shoe;
+
+    @Transient
+    List<Comment> comments;
+
+    @Transient
+    List<Like> likes;
 
     public Distance() {}
 
     public Distance(int userID, int isPublic, String date, String location,
                     String team, int intensity, String journal, String runtime,
                     String pace, float distance, int shoe) {
-
         this.userID = userID;
         this.isPublic = isPublic;
         this.date = date;
@@ -46,6 +53,9 @@ public class Distance {
         this.pace = pace;
         this.distance = distance;
         this.shoe = shoe;
+    }
+    public int getType() {
+        return type;
     }
 
     public int getUserID() {
@@ -136,7 +146,25 @@ public class Distance {
         this.shoe = shoe;
     }
 
+    public List<Comment> getComments() {
+        return this.comments;
+    }
 
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public void setLikes(List<Like> likes) {
+        this.likes = likes;
+    }
+
+    public List<Like> getLikes() {
+        return this.likes;
+    }
+
+    public int getId() {
+        return this.id;
+    }
 
 
 }
