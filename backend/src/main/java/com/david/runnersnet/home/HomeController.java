@@ -1,11 +1,11 @@
 package com.david.runnersnet.home;
 
-import com.david.runnersnet.logs.distance.Distance;
-import com.david.runnersnet.logs.distance.DistanceBuilder;
+import com.david.runnersnet.logs.Composite;
+import com.david.runnersnet.logs.LogBuilder;
+import com.david.runnersnet.logs.Speed.SpeedRepository;
 import com.david.runnersnet.logs.distance.DistanceRepository;
-import com.david.runnersnet.user.UserEntity;
-import com.david.runnersnet.user.UserLoggedIn;
-import com.david.runnersnet.user.UserRepository;
+import com.david.runnersnet.logs.race.RaceRepository;
+import com.david.runnersnet.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,18 +23,12 @@ public class HomeController {
     UserRepository userRepository;
 
     @Autowired
-    DistanceBuilder distanceBuilder;
-
-    @Autowired
-    DistanceRepository distanceRepository;
+    HomeBuilder homeBuilder;
 
     @GetMapping
-    public ResponseEntity<List<Distance>> getHomePageContent() {
-        UserEntity user = userRepository.findByUsername(UserLoggedIn.getInstance().getUsername());
+    public ResponseEntity<List<Composite>> getHomePageContent() {
+        int cryptID = userRepository.findByUsername(UserLoggedIn.getInstance().getUsername()).getCryptID();
 
-        distanceBuilder.setDistanceList(distanceRepository.findByUserID(user.getCryptID()));
-        distanceBuilder.addLikesAndCommentsMany();
-
-        return ResponseEntity.ok(distanceBuilder.getDistanceList());
+        return ResponseEntity.ok(homeBuilder.getHomeFeed(cryptID));
     }
 }

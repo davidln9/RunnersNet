@@ -3,6 +3,8 @@ package com.david.runnersnet.user;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.util.List;
 
 @Entity
 @Table(name = "useraccount")
@@ -14,6 +16,9 @@ public class UserEntity {
     private String password;
 
     private String username;
+
+    @Transient
+    private List<UserEntity> friends;
 
 
     public UserEntity() {}
@@ -46,4 +51,13 @@ public class UserEntity {
     public int getCryptID() {
         return this.cryptID;
     }
+
+    public void setFriends(List<UserEntity> friends) {
+        this.friends = friends;
+    }
+
+    public List<UserEntity> getFriends() {
+        return this.friends;
+    }
+
 }

@@ -1,5 +1,8 @@
 package com.david.runnersnet.logs.distance;
 
+import com.david.runnersnet.logs.CompareUtil;
+import com.david.runnersnet.logs.Composite;
+import com.david.runnersnet.logs.DateParser;
 import com.david.runnersnet.misc.comments.Comment;
 import com.david.runnersnet.misc.likes.Like;
 
@@ -8,25 +11,24 @@ import java.util.List;
 
 @Entity
 @Table(name = "distance")
-public class Distance {
+public class Distance implements Composite {
 
     @Id
-    private int id;
+    private Integer id;
 
-    private int userID;
+    private Integer userID;
 
     @Column(name = "public")
-    private int isPublic;
+    private Integer isPublic;
 
     private String date;
     private String location;
     private String team;
-    private int intensity;
+    private Integer intensity;
     private String journal;
     private String runtime;
     private String pace;
     private float distance;
-    private Integer type = 0;
 
     @Column(nullable = true)
     private Integer shoe;
@@ -37,26 +39,10 @@ public class Distance {
     @Transient
     List<Like> likes;
 
-    public Distance() {}
+    @Transient
+    private Integer posttype = 0;
 
-    public Distance(int userID, int isPublic, String date, String location,
-                    String team, int intensity, String journal, String runtime,
-                    String pace, float distance, int shoe) {
-        this.userID = userID;
-        this.isPublic = isPublic;
-        this.date = date;
-        this.location = location;
-        this.team = team;
-        this.intensity = intensity;
-        this.journal = journal;
-        this.runtime = runtime;
-        this.pace = pace;
-        this.distance = distance;
-        this.shoe = shoe;
-    }
-    public int getType() {
-        return type;
-    }
+    public Distance() {}
 
     public int getUserID() {
         return userID;
@@ -162,11 +148,21 @@ public class Distance {
         return this.likes;
     }
 
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
 
+    @Override
+    public Integer getPosttype() {
+        return 0;
+    }
 
+
+    @Override
+    public int compareTo(Composite o) {
+
+        return CompareUtil.getComparison(this.getDate(), o.getDate());
+    }
 }
 
 //        | type      | int(11)       | YES  |     | NULL    |       |
