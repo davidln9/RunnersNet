@@ -6,8 +6,7 @@ import com.david.runnersnet.logs.Speed.SpeedRepository;
 import com.david.runnersnet.logs.distance.DistanceRepository;
 import com.david.runnersnet.logs.race.RaceRepository;
 import com.david.runnersnet.misc.posts.PostRepository;
-import com.david.runnersnet.user.Friend;
-import com.david.runnersnet.user.FriendRepository;
+import com.david.runnersnet.users.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,8 +29,6 @@ public class HomeBuilder {
     @Autowired
     SpeedRepository speedRepository;
 
-    @Autowired
-    FriendRepository friendRepository;
 
     @Autowired
     PostRepository postRepository;
@@ -39,7 +36,9 @@ public class HomeBuilder {
     public HomeBuilder() {
     }
 
-    public List<Composite> getHomeFeed(int cryptID) {
+    public List<Composite> getHomeFeed(UserEntity userEntity) {
+
+        int cryptID = userEntity.getId();
         List<Composite> composites = new ArrayList<>();
 
         for (Composite composite : distanceRepository.findByUserID(cryptID)) {
@@ -58,42 +57,25 @@ public class HomeBuilder {
             composites.add(post);
         }
 
-        for (Object friend : friendRepository.findFriends(cryptID)) {
-            Friend f = (Friend)friend;
-            if (f.getPerson1() != cryptID) {
-                for (Composite composite : distanceRepository.findByUserID(f.getPerson1())) {
-                    composites.add(composite);
-                }
-                for (Composite composite : raceRepository.findByUserID(f.getPerson1())) {
-                    composites.add(composite);
-                }
-                for (Composite composite : speedRepository.findByUserID(f.getPerson1())) {
-                    composites.add(composite);
-                }
-                for (Composite post : postRepository.findByUserID(f.getPerson1())) {
-                    composites.add(post);
-                }
-            } else {
-                for (Composite composite : distanceRepository.findByUserID(f.getPerson2())) {
-                    composites.add(composite);
-                }
-                for (Composite composite : raceRepository.findByUserID(f.getPerson2())) {
-                    composites.add(composite);
-                }
-                for (Composite composite : speedRepository.findByUserID(f.getPerson2())) {
-                    composites.add(composite);
-                }
-                for (Composite post : postRepository.findByUserID(f.getPerson2())) {
-                    composites.add(post);
-                }
+        for (UserEntity friend : userEntity.getFriends()) {
+
+            for (Composite composite : distanceRepository.findByUserID(friend.getId())) {
+                composites.add(composite);
+            }
+            for (Composite composite : raceRepository.findByUserID(friend.getId())) {
+                composites.add(composite);
+            }
+            for (Composite composite : speedRepository.findByUserID(friend.getId())) {
+                composites.add(composite);
+            }
+            for (Composite post : postRepository.findByUserID(friend.getId())) {
+                composites.add(post);
             }
         }
 
 
         logBuilder.setCompositeList(composites);
         logBuilder.addLikesAndCommentsMany();
-
-        composites = logBuilder.getCompositeList();
 
         Collections.sort(composites);
         return composites;

@@ -62,8 +62,4 @@ public class LogBuilder {
 
         }
     }
-
-    public List<Composite> getCompositeList() {
-        return this.compositeList;
-    }
 }

@@ -1,24 +1,21 @@
 package com.david.runnersnet.home;
 
+import com.david.runnersnet.auth.TokenDecoder;
 import com.david.runnersnet.logs.Composite;
-import com.david.runnersnet.logs.LogBuilder;
-import com.david.runnersnet.logs.Speed.SpeedRepository;
-import com.david.runnersnet.logs.distance.DistanceRepository;
-import com.david.runnersnet.logs.race.RaceRepository;
-import com.david.runnersnet.user.*;
+import com.david.runnersnet.users.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/home")
+@RequestMapping("/api/homefeed")
 public class HomeController {
 
-    // all these autowired things!!!!
     @Autowired
     UserRepository userRepository;
 
@@ -26,9 +23,8 @@ public class HomeController {
     HomeBuilder homeBuilder;
 
     @GetMapping
-    public ResponseEntity<List<Composite>> getHomePageContent() {
-        int cryptID = userRepository.findByUsername(UserLoggedIn.getInstance().getUsername()).getCryptID();
+    public ResponseEntity<List<Composite>> getHomePageContent(@RequestHeader("Authorization") String token) {
 
-        return ResponseEntity.ok(homeBuilder.getHomeFeed(cryptID));
+        return ResponseEntity.ok(homeBuilder.getHomeFeed(userRepository.findByEmail(TokenDecoder.decode(token).getUser())));
     }
 }
