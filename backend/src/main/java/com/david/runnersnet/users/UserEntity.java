@@ -39,16 +39,7 @@ public class UserEntity {
     )
     private Collection<Role> roles;
 
-    @ManyToMany
-    @JoinTable(
-            name="friends",
-            joinColumns = @JoinColumn(
-                    name = "user_id", referencedColumnName = "id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name="friend_id", referencedColumnName = "id"
-            )
-    )
+    @Transient
     private Collection<UserEntity> friends;
 
     private String first_name;
@@ -62,7 +53,7 @@ public class UserEntity {
     @Column(columnDefinition = "DATETIME")
     private String date_created;
     @Column(columnDefinition = "VARCHAR(36)")
-    private String forgotPassword;
+    private String passwordResetKey;
     private String phoneNumber;
     private String country;
     @Column(columnDefinition = "VARCHAR(5000)")
@@ -159,12 +150,16 @@ public class UserEntity {
         return this.roles;
     }
 
-    public String getForgotPassword() {
-        return forgotPassword;
+    public String getPasswordResetKey() {
+        return passwordResetKey;
     }
 
-    public void setForgotPassword() {
-        this.forgotPassword = UUID.randomUUID().toString().replace("-","");
+    public void generatePasswordResetKey() {
+        this.passwordResetKey = UUID.randomUUID().toString().replace("-","");
+    }
+
+    public void invalidatePasswordKey() {
+        this.passwordResetKey = null;
     }
 
     public String getPhoneNumber() {
@@ -190,5 +185,8 @@ public class UserEntity {
 
     public void addFriend(UserEntity friend) {
         this.friends.add(friend);
+    }
+    public void setFriends(Collection<UserEntity> friends) {
+        this.friends = friends;
     }
 }

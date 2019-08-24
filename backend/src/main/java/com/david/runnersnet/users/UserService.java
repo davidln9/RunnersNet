@@ -2,6 +2,7 @@ package com.david.runnersnet.users;
 
 
 import com.david.runnersnet.auth.EmailExistsException;
+import com.david.runnersnet.email.EmailService;
 import com.david.runnersnet.roles.Role;
 import com.david.runnersnet.roles.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     RoleRepository roleRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     /**
      *  Get and encrypt password from a new user and then save it to  userRepository
@@ -66,7 +70,7 @@ public class UserService implements UserDetailsService {
         return authorities;
     }
 
-    public void registerNewUserAccount(UserEntity accountDto) throws EmailExistsException {
+    public String registerNewUserAccount(UserEntity accountDto) throws EmailExistsException {
 
         if (userRepository.findByEmail(accountDto.getEmail()) != null) {
             throw new EmailExistsException
@@ -76,10 +80,8 @@ public class UserService implements UserDetailsService {
 
         user.setFirst_name(accountDto.getFirst_name());
         user.setLast_name(accountDto.getLast_name());
-        user.setPassword(accountDto.getPassword());
         user.setEmail(accountDto.getEmail());
         user.setGender(accountDto.getGender());
-        user.setDateOfBirth(accountDto.getDateOfBirth());
 
         Role role = roleRepository.findByName("ROLE_USER");
         user.setRoles(Arrays.asList(role));
@@ -87,7 +89,21 @@ public class UserService implements UserDetailsService {
 
         // store today's date in mysql datetime format
         user.setDate_created(sdf.format(new Date()));
-        save(user);
+
+        user.generatePasswordResetKey();
+        userRepository.save(user);
+
+        return user.getPasswordResetKey();
+    }
+
+    public void completeRegistration(UserEntity userEntity) {
+
+        save(userEntity);
+    }
+
+    public void sendUserSignupPassword(String email, String key) {
+
+        emailService.sendPlainText(new String[]{ email }, "Set your password for RunnersNet", "http://localhost:3000/setpassword/" + key);
     }
 
     public void updateUserAccount(UserEntity userEntity, UserEntity foundUserEntity) {
@@ -124,9 +140,6 @@ public class UserService implements UserDetailsService {
         if(userEntity.getCountry() == null || userEntity.getCountry().equals("")){
             userEntity.setCountry(foundUserEntity.getCountry());
         }
-        if(userEntity.getZipcode() == null || userEntity.getZipcode().equals("")){
-            userEntity.setZipcode(foundUserEntity.getZipcode());
-        }
 
 
         foundUserEntity.setFirst_name(userEntity.getFirst_name());
@@ -136,9 +149,6 @@ public class UserService implements UserDetailsService {
         foundUserEntity.setDateOfBirth(userEntity.getDateOfBirth());
         foundUserEntity.setPhoneNumber(userEntity.getPhoneNumber());
         foundUserEntity.setCountry(userEntity.getCountry());
-        foundUserEntity.setZipcode(userEntity.getZipcode());
-        foundUserEntity.setForgotPassword();
-
         userRepository.save(foundUserEntity);
     }
 

@@ -9,29 +9,25 @@ import javax.persistence.*;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@Table(name="friends")
 public class RequestEntity {
 
-    @Id
-    private Long id;
-    private Integer status;
+    @EmbeddedId
+    private RequestId requestId;
 
-    @ManyToOne
-    @JoinColumn(name = "sender")
-    private UserEntity sender;
-
-    @ManyToOne
-    @JoinColumn(name = "receiver")
-    private UserEntity receiver;
-
-    @Column(name="createdAt", nullable = false, updatable = false)
-    @CreatedDate
-    private long createdAt;
-
-    @Column(name="updatedAt")
-    @LastModifiedDate
-    private long modifiedDate;
+    private int status;
 
 
     public RequestEntity() {
     }
+
+    public void setRequestId(RequestId requestId) {
+        this.requestId = requestId;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+
 }

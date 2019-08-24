@@ -1,21 +1,14 @@
 package com.david.runnersnet.users;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.david.runnersnet.auth.EmailExistsException;
 import com.david.runnersnet.auth.TokenDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
-import static com.david.runnersnet.auth.AuthConstants.SECRET;
-import static com.david.runnersnet.auth.AuthConstants.TOKEN_PREFIX;
 
 @CrossOrigin
 @RestController
@@ -55,7 +48,8 @@ public class UserController {
     public ResponseEntity<String> register(@RequestBody UserEntity userFragment) {
 
         try {
-            userService.registerNewUserAccount(userFragment);
+            String key = userService.registerNewUserAccount(userFragment);
+            userService.sendUserSignupPassword(userFragment.getEmail(), key);
         } catch (EmailExistsException ex) {
             return ResponseEntity.badRequest().header("Message", "This email already exists!").build();
         }
@@ -63,31 +57,19 @@ public class UserController {
         return ResponseEntity.ok("User created");
     }
 
-    @GetMapping("/register")
-    public String getMap() {
-        System.out.println("here");
-        return "yes";
-    }
-
-    @PutMapping("/{email}")
+    @PutMapping
     public ResponseEntity<UserEntity> updateUserEntity(
             @RequestHeader("Authorization") String token,
-            @PathVariable (value= "email") String email,
-            @RequestBody UserEntity userEntity)  {
-
-        /*
-            Must verify email before performing these changes to the user
-         */
+            @RequestBody UserEntity userEntity) {
 
         TokenDecoder tokenDecoder = TokenDecoder.decode(token);
 
-        if (!tokenDecoder.getUser().equals(email)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .header("Message","Unauthorized to change that account")
-                    .build();
+        UserEntity foundUserEntity = userRepository.findByEmail(tokenDecoder.getUser());
+
+        if (foundUserEntity == null) {
+            return ResponseEntity.badRequest().header("message","No user found").build();
         }
 
-        UserEntity foundUserEntity = userRepository.findByEmail(tokenDecoder.getUser());
         userService.updateUserAccount(userEntity, foundUserEntity);
 
         return ResponseEntity.ok(foundUserEntity);
