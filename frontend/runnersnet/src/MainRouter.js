@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // components
 import Login from './components/Login';
 import NotFound from './components/NotFound';
+import Signup from './components/Signup';
 
 class MainRouter extends React.Component {
 
@@ -14,6 +15,7 @@ class MainRouter extends React.Component {
             <Router>
                 <Switch>
                     <Route path="/login" component={Login} />
+                    <Route path="/signup" component={Signup} />
                     <Route component={NotFound}/>
                 </Switch>
             </Router>
