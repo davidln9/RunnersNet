@@ -1,7 +1,17 @@
+const BASE = "http://localhost:8080"
+const API = BASE + "/api"
+const USER_API = API + "/user"
+const ADMIN = BASE + "/admin"
+const LOGIN = BASE + "/login"
+const REGISTER_USER = USER_API + "/register"
+
 const urls = {
-    API: "localhost:8080/api",
-    ADMIN: "localhost:8080/admin",
-    LOGIN: "localhost:8080/login"
+    API: API,
+    BASE: BASE,
+    USER_API:  USER_API,
+    ADMIN: ADMIN,
+    LOGIN: LOGIN,
+    REGISTER_USER: REGISTER_USER
 }
 
 export default urls;

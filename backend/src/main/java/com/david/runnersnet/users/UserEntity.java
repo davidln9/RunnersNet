@@ -46,8 +46,6 @@ public class UserEntity {
     private String last_name;
     private String email;
     private String password;
-    @Column(columnDefinition = "VARCHAR(10)")
-    private String gender;
     @Column(name = "date_of_birth", columnDefinition = "DATE")
     private String dateOfBirth;
     @Column(columnDefinition = "DATETIME")
@@ -115,14 +113,6 @@ public class UserEntity {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
     public String getDateOfBirth() {

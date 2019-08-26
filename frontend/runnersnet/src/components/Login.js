@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom'
 
 import { actions } from '../redux/Users/actions';
 
@@ -8,70 +9,55 @@ const login = actions.login;
 
 class Login extends React.Component {
 
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            username: "",
-            password: ""
-        }
+    this.state = {
+      username: "",
+      password: ""
     }
+  }
 
-    setUsername(username) {
-        this.setState({
-            username: username
-        })
-    }
+  setUsername(username) {
+    this.setState({
+      username: username
+    })
+  }
 
-    setPassword(password) {
-        this.setState({
-            password: password
-        })
-    }
+  setPassword(password) {
+    this.setState({
+      password: password
+    })
+  }
 
-    submitForm() {
-        this.props.dispatch(login(this.state));
-    }
+  submitForm() {
+    this.props.dispatch(login(this.state));
+  }
 
-    render() {
-        console.log(this.props);
-        return (
-            <div className="register-area ptb-100">
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col-md-12 col-12 col-lg-6 col-xl-6 ml-auto mr-auto">
-                            <div className="login">
-                                <div className="login-form-container">
-                                    <div className="login-form">
-                                        <input type="email" name="user-name" placeholder="Username" onChange={evt=>this.setUsername(evt.target.value)}/>
-                                        <input type="password" name="user-password" placeholder="Password" onChange={evt=>this.setPassword(evt.target.value)}/>
-                                        <div className="button-box">
-                                            <div className="login-toggle-btn">
-                                                <input type="checkbox" />
-                                                <label>Remember me</label>
-                                                <a href="#">Forgot Password?</a>
-                                            </div>
-                                            <button type="submit" onClick={()=>this.submitForm()} className="default-btn floatright">Login</button>
-                                        </div>
-                                    </div>
-                                    {this.props.message}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
-    }
+  render() {
+    console.log(this.props);
+    return (
+      <div className="login-page">
+        <div className="form">
+          <div className="login-form">
+            <input type="email" placeholder="email" onChange={evt => this.setUsername(evt.target.value)} />
+            <input type="password" placeholder="password" onChange={evt => this.setPassword(evt.target.value)} />
+            <button onClick={() => this.submitForm()}>login</button>
+            <p className="message">Not registered? <Link to="/signup">Create an account</Link></p>
+          </div>
+        </div>
+      </div>
+    )
+  }
 }
 
 function mapStateToProps(state) {
-    const loggedin = state.Users.loggedin;
-    const message = state.Users.message
-    return ({
-        loggedin: loggedin,
-        message: message
-    })
+  const loggedin = state.Users.loggedin;
+  const message = state.Users.message
+  return ({
+    loggedin: loggedin,
+    message: message
+  })
 }
 
 export default connect(mapStateToProps)(Login);

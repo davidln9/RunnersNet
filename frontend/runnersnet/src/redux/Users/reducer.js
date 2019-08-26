@@ -15,7 +15,12 @@ export default function userReducer(state = initialState, action) {
                 });
         case actions.LOGIN_FAILURE:
             return ({
-                logged: false,
+                loggedin: false,
+                message: action.data
+            })
+        case actions.REGISTER_SUCCESS:
+            return ({
+                loggedin: false,
                 message: action.data
             })
         default:

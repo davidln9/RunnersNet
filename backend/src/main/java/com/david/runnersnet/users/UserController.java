@@ -3,12 +3,9 @@ package com.david.runnersnet.users;
 import com.david.runnersnet.auth.EmailExistsException;
 import com.david.runnersnet.auth.TokenDecoder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.web.bind.annotation.*;
-
-import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 
 @CrossOrigin
 @RestController

@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from './components/Login';
 import NotFound from './components/NotFound';
 import Signup from './components/Signup';
+import Home from './components/Home';
 
 class MainRouter extends React.Component {
 
@@ -14,6 +15,7 @@ class MainRouter extends React.Component {
         return (
             <Router>
                 <Switch>
+                    <Route exact path="/" component={Home} />
                     <Route path="/login" component={Login} />
                     <Route path="/signup" component={Signup} />
                     <Route component={NotFound}/>

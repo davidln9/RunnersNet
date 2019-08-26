@@ -81,7 +81,6 @@ public class UserService implements UserDetailsService {
         user.setFirst_name(accountDto.getFirst_name());
         user.setLast_name(accountDto.getLast_name());
         user.setEmail(accountDto.getEmail());
-        user.setGender(accountDto.getGender());
 
         Role role = roleRepository.findByName("ROLE_USER");
         user.setRoles(Arrays.asList(role));
@@ -123,9 +122,6 @@ public class UserService implements UserDetailsService {
             userEntity.setPassword(foundUserEntity.getPassword());
             passwordNeedsEncryption = false;
         }
-        if(userEntity.getGender() == null || userEntity.getGender().equals("")){
-            userEntity.setGender(foundUserEntity.getGender());
-        }
         if(userEntity.getDateOfBirth() == null || userEntity.getDateOfBirth().equals("")){
             userEntity.setDateOfBirth(foundUserEntity.getDateOfBirth());
         }
@@ -145,7 +141,6 @@ public class UserService implements UserDetailsService {
         foundUserEntity.setFirst_name(userEntity.getFirst_name());
         foundUserEntity.setLast_name(userEntity.getLast_name());
         foundUserEntity.setEmail(userEntity.getEmail());
-        foundUserEntity.setGender(userEntity.getGender());
         foundUserEntity.setDateOfBirth(userEntity.getDateOfBirth());
         foundUserEntity.setPhoneNumber(userEntity.getPhoneNumber());
         foundUserEntity.setCountry(userEntity.getCountry());
